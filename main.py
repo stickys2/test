@@ -38,7 +38,10 @@ def message(topic, msg):
                 machine.reset()
             if("update" in param):
                 print("Updating..")
+                client.publish("device/test", "{\"id\":0, \"msg:\":\"OTA update starting...\"}")
                 sogit.ota_update()
+                client.publish("device/test", "{\"id\":0, \"msg:\":\"OTA update complete! Restarting...\"}")
+                machine.reset()
                 print("Update complete! Restart...")
             if("door" in param):
                 if(param["door"] == 1):
@@ -98,3 +101,4 @@ while True:
     except Exception as ex:
         print("MQTT error:", ex)
         restart_and_reconnect()
+
